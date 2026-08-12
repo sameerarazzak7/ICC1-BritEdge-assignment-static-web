@@ -18,7 +18,7 @@ jobs:
             az storage blob upload-batch \
               --account-name britedgestorage \
               --auth-mode key \
-              --account-key ${{ secrets.AZURE_STORAGE_KEY }} \
+              --account-key ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }} \
               -d '$web' \
               -s . \
               --overwrite
