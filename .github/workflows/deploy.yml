@@ -1,0 +1,24 @@
+name: Deploy static site to Azure Storage
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Upload to Azure Blob Storage
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az storage blob upload-batch \
+              --account-name britedgestorage \
+              --auth-mode key \
+              --account-key ${{ secrets.AZURE_STORAGE_KEY }} \
+              -d '$web' \
+              -s . \
+              --overwrite
